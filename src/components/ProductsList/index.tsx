@@ -2,13 +2,13 @@ import Product from '../Product'
 
 import { Container, List } from './styles'
 
-type Props = {
+export type Props = {
   title: string
   background: 'gray' | 'black'
 }
 
 const ProductsList = ({ background, title }: Props) => (
-  <Container>
+  <Container background={background}>
     <div className="container">
       <h2>{title}</h2>
       <List>
