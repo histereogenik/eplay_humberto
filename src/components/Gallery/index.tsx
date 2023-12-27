@@ -8,6 +8,7 @@ import hogwarts from '../../assets/images/fundo_hogwarts.png'
 import play from '../../assets/images/play.png'
 import zoom from '../../assets/images/zoom.png'
 import fechar from '../../assets/images/fechar.png'
+import { useState } from 'react'
 
 type GalleryItem = {
   type: 'image' | 'video'
@@ -35,6 +36,8 @@ type Props = {
 }
 
 const Gallery = ({ defaultCover, name }: Props) => {
+  const [modalEstaAberto, setModalEstaAberto] = useState(false)
+
   const getMediaCover = (item: GalleryItem) => {
     if (item.type === 'image') return item.url
     return defaultCover
@@ -50,7 +53,7 @@ const Gallery = ({ defaultCover, name }: Props) => {
       <Section title="Galeria" background="black">
         <Items>
           {mock.map((media, index) => (
-            <Item key={media.url}>
+            <Item key={media.url} onClick={() => setModalEstaAberto(true)}>
               <img
                 src={getMediaCover(media)}
                 alt={`Imagem ${index + 1} de ${name}`}
@@ -65,11 +68,15 @@ const Gallery = ({ defaultCover, name }: Props) => {
           ))}
         </Items>
       </Section>
-      <Modal>
+      <Modal className={modalEstaAberto ? 'visivel' : ''}>
         <ModalContent className="container">
           <header>
             <h4>{name}</h4>
-            <img src={fechar} alt="fechar" />
+            <img
+              src={fechar}
+              onClick={() => setModalEstaAberto(false)}
+              alt="fechar"
+            />
           </header>
           <img src={spiderman} alt="" />
         </ModalContent>
