@@ -44,7 +44,7 @@ export const Modal = styled.div`
   height: 100%;
   z-index: 1;
   display: none;
-  align-item: center;
+  align-items: center;
   justify-content: center;
 
   &.visivel {
@@ -76,8 +76,14 @@ export const ModalContent = styled.div`
     }
   }
 
-  img {
+  img,
+  iframe {
     display: block;
     max-width: 100%;
+  }
+
+  iframe {
+    width: 100%;
+    height: 480px;
   }
 `
