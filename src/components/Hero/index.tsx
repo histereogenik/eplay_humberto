@@ -20,7 +20,9 @@ const Hero = ({ game }: Props) => (
       <ProductInfos>
         <h2>{game.name}</h2>
         <p>
-          <span>De {formataPreco(game.prices.old)}</span>
+          {game.prices.discount && (
+            <span>De {formataPreco(game.prices.old)}</span>
+          )}
           Por {formataPreco(game.prices.current)}
         </p>
         <Button
