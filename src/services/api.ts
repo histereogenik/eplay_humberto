@@ -8,9 +8,16 @@ const api = createApi({
   endpoints: (builder) => ({
     getFeaturedGame: builder.query<Game, void>({
       query: () => 'destaque'
+    }),
+    getOnSale: builder.query<Game[], void>({
+      query: () => 'promocoes'
+    }),
+    getSoon: builder.query<Game[], void>({
+      query: () => 'em-breve'
     })
   })
 })
 
-export const { useGetFeaturedGameQuery } = api
+export const { useGetFeaturedGameQuery, useGetOnSaleQuery, useGetSoonQuery } =
+  api
 export default api
