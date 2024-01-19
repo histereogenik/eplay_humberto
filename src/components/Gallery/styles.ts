@@ -62,7 +62,7 @@ export const Modal = styled.div`
   }
 `
 export const ModalContent = styled.div`
-  max-width: 960px !important;
+  max-width: 960px;
   position: relative;
   z-index: 1;
 
