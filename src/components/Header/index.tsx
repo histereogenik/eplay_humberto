@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { open } from '../../store/reducers/cart'
 
-import { HeaderBar, LinkItem, Links, CartButton } from './styles'
+import { HeaderBar, LinkItem, Links, CartButton, Hamburger } from './styles'
 
 import logo from '../../assets/images/logo.svg'
 import carrinho from '../../assets/images/carrinho.svg'
@@ -21,6 +21,11 @@ const Header = () => {
   return (
     <HeaderBar>
       <div>
+        <Hamburger>
+          <span />
+          <span />
+          <span />
+        </Hamburger>
         <Link to="/">
           <img src={logo} alt="EPLAY" />
         </Link>
@@ -39,7 +44,8 @@ const Header = () => {
         </nav>
       </div>
       <CartButton onClick={openCart}>
-        {items.length} - produtos(s)
+        {items.length}
+        <span> - produtos(s)</span>
         <img src={carrinho} alt="carrinho" />
       </CartButton>
     </HeaderBar>
