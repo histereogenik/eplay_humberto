@@ -81,6 +81,7 @@ const Header = () => {
             <Link
               title="Clique aqui para acessar a página de categorias"
               to="/categories"
+              onClick={() => setIsMenuOpen(false)}
             >
               Categorias
             </Link>
@@ -89,6 +90,7 @@ const Header = () => {
             <HashLink
               title="Clique aqui para acessar a sessão de em breve"
               to="/#coming-soon"
+              onClick={() => setIsMenuOpen(false)}
             >
               Em breve
             </HashLink>
@@ -97,6 +99,7 @@ const Header = () => {
             <HashLink
               title="Clique aqui para acessar a sessão de promoções"
               to="/#on-sale"
+              onClick={() => setIsMenuOpen(false)}
             >
               Promoções
             </HashLink>
