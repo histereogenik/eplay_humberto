@@ -5,7 +5,7 @@ import Button from '../Button'
 
 import { RootReducer } from '../../store'
 import { close, remove } from '../../store/reducers/cart'
-import { formataPreco } from '../ProductsList'
+import { parseToBrl } from '../../utils'
 
 import {
   Overlay,
@@ -47,7 +47,7 @@ const Cart = () => {
                 <h3>{item.name}</h3>
                 <Tag>{item.details.category}</Tag>
                 <Tag>{item.details.system}</Tag>
-                <span>{formataPreco(item.prices.current)}</span>
+                <span>{parseToBrl(item.prices.current)}</span>
               </div>
               <button onClick={() => removeItem(item.id)} type="button" />
             </CartItem>
@@ -55,7 +55,7 @@ const Cart = () => {
         </ul>
         <Quantity>{items.length} jogos(s) no carrinho</Quantity>
         <Prices>
-          Total de {formataPreco(getTotalPrice())}{' '}
+          Total de {parseToBrl(getTotalPrice())}{' '}
           <span>Em até 6x sem juros</span>
         </Prices>
         <Button title="Clique aqui para continuar com a compra" type="button">
