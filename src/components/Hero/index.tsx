@@ -7,7 +7,7 @@ import { Game } from '../../pages/Home'
 import { parseToBrl } from '../../utils'
 import { add, open } from '../../store/reducers/cart'
 
-import { Banner, ProductInfos } from './styles'
+import * as S from './styles'
 
 type Props = {
   game: Game
@@ -22,13 +22,13 @@ const Hero = ({ game }: Props) => {
   }
 
   return (
-    <Banner style={{ backgroundImage: `url(${game.media.cover})` }}>
+    <S.Banner style={{ backgroundImage: `url(${game.media.cover})` }}>
       <div className="container">
         <div>
           <Tag>{game.details.category}</Tag>
           <Tag>{game.details.system}</Tag>
         </div>
-        <ProductInfos>
+        <S.ProductInfos>
           <h2>{game.name}</h2>
           <p>
             {game.prices.discount && (
@@ -48,9 +48,9 @@ const Hero = ({ game }: Props) => {
           ) : (
             <>coming in {game.release_date}</>
           )}
-        </ProductInfos>
+        </S.ProductInfos>
       </div>
-    </Banner>
+    </S.Banner>
   )
 }
 

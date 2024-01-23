@@ -25,14 +25,14 @@ export const Card = styled(Link)`
   }
 `
 
-export const Titulo = styled.h3`
+export const Title = styled.h3`
   display: block;
   font-weight: bold;
   font-size: 16px;
   margin-top: 16px;
   margin-bottom: 8px;
 `
-export const Descricao = styled.p`
+export const Description = styled.p`
   display: block;
   font-size: 14px;
   line-height: 22px;

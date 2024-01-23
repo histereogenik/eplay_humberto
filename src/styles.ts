@@ -5,7 +5,7 @@ export const colors = {
   black: '#111',
   gray: '#333',
   green: '#10AC84',
-  lightGreen: '#A3A3A3'
+  lightGray: '#A3A3A3'
 }
 
 export const breakpoints = {
