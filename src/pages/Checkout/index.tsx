@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { Navigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
@@ -6,16 +8,28 @@ import Button from '../../components/Button'
 import CheckoutCard from '../../components/Card'
 import Card from '../../components/Card'
 
+import { RootReducer } from '../../store'
 import { usePurchaseMutation } from '../../services/api'
 
 import barCode from '../../assets/images/boleto.png'
 import creditCard from '../../assets/images/cartao.png'
 
 import * as S from './styles'
+import { getTotalPrice, parseToBrl } from '../../utils'
+
+type Installment = {
+  quantity: number
+  amount: number
+  formattedAmount: string
+}
 
 const Checkout = () => {
   const [payWithCard, setPayWithCard] = useState(false)
   const [purchase, { data, isSuccess }] = usePurchaseMutation()
+  const [installments, setInstallments] = useState<Installment[]>([])
+  const { items } = useSelector((state: RootReducer) => state.cart)
+
+  const totalPrice = getTotalPrice(items)
 
   const form = useFormik({
     initialValues: {
@@ -113,21 +127,34 @@ const Checkout = () => {
     }
   })
 
-  const getErrorMessage = (fieldName: string, message?: string) => {
-    const isTouched = fieldName in form.touched
-    const isInvalid = fieldName in form.errors
-
-    if (isTouched && isInvalid) return message
-
-    return ''
-  }
-
   const checkInputHasError = (fieldName: string) => {
     const isTouched = fieldName in form.touched
     const isInvalid = fieldName in form.errors
     const hasError = isTouched && isInvalid
 
     return hasError
+  }
+
+  useEffect(() => {
+    const calculateInstallments = () => {
+      const installmentsArray: Installment[] = []
+      for (let i = 1; i <= 6; i++) {
+        installmentsArray.push({
+          quantity: i,
+          amount: totalPrice / i,
+          formattedAmount: parseToBrl(totalPrice / i)
+        })
+      }
+
+      return installmentsArray
+    }
+    if (totalPrice > 0) {
+      setInstallments(calculateInstallments())
+    }
+  }, [totalPrice])
+
+  if (items.length === 0) {
+    return <Navigate to="/" />
   }
 
   return (
@@ -252,6 +279,7 @@ const Checkout = () => {
               <S.TabButton
                 onClick={() => setPayWithCard(false)}
                 isActive={!payWithCard}
+                type="button"
               >
                 <img src={barCode} alt="Boleto" />
                 Boleto Bancário
@@ -259,6 +287,7 @@ const Checkout = () => {
               <S.TabButton
                 onClick={() => setPayWithCard(true)}
                 isActive={payWithCard}
+                type="button"
               >
                 <img src={creditCard} alt="Cartão de crédito" />
                 Cartão de crédito
@@ -385,9 +414,11 @@ const Checkout = () => {
                             checkInputHasError('installments') ? 'error' : ''
                           }
                         >
-                          <option>1x de R$ 200,00</option>
-                          <option>2x de R$ 200,00</option>
-                          <option>3x de R$ 200,00</option>
+                          {installments.map((i) => (
+                            <option key={i.quantity}>
+                              {i.quantity}x de {i.formattedAmount}
+                            </option>
+                          ))}
                         </select>
                       </S.InputGroup>
                     </S.Row>
@@ -407,7 +438,7 @@ const Checkout = () => {
           </CheckoutCard>
           <Button
             onClick={form.handleSubmit}
-            type="button"
+            type="submit"
             title="Clique aqui para finalizar a compra"
           >
             Finalizar compra
